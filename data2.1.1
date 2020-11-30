@@ -1,0 +1,30 @@
+_author_ = 'mike_blowels'
+import urllib.request
+import sys
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+#read data from uci
+target_url = ("https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/connectionist-bench/sonar/sonar.all-data")
+data = urllib.request.urlopen(target_url)
+# 将数据排列为标签列表和属性列表
+xlist = []
+labels = []
+for line in data:
+# split on comma 逗号分割数据
+    row = line.decode().strip().split(",")
+    xlist.append(row)
+
+nrow = len(xlist)         #行
+ncol = len(xlist[1])      #列
+type = [0]*3
+colcounts = []
+
+# 展示分位数图for column 3
+col = 3
+coldata = []
+for row in xlist:
+    coldata.append(float(row[col]))
+stats.probplot(coldata,dist = "norm",plot=plt)
+plt.show()
+
